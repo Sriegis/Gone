@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Gone</RootNamespace>
     <AssemblyName>Gone</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -46,8 +47,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cell.cs" />
+    <Compile Include="CellGenerator.cs" />
+    <Compile Include="CellOwner.cs" />
+    <Compile Include="Coordinates.cs" />
     <Compile Include="Grid.cs" />
+    <Compile Include="ICell.cs" />
+    <Compile Include="IGrid.cs" />
+    <Compile Include="IStrategy.cs" />
+    <Compile Include="ITransaction.cs" />
+    <Compile Include="MyCell.cs" />
+    <Compile Include="NeighbourCell.cs" />
+    <Compile Include="Player.cs" />
+    <Compile Include="PlayerCoordinateNavigator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Strategies\StrategyStub.cs" />
+    <Compile Include="Transaction.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
