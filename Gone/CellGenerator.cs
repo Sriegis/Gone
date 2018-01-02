@@ -39,8 +39,32 @@ namespace Gone
 
         private int GetCellCount(int playerCount)
         {
-            var playerCeiling = (int)Math.Ceiling((playerCount - 1)/6d);
-            return 48 * playerCeiling * playerCeiling + 60 * playerCeiling + 19;
+            var shellCount = GetShellCount(playerCount);
+            var cellCount = 3 * shellCount * (shellCount - 1) + 1;
+            return cellCount;
+        }
+
+        private int GetShellCount(int playerCount)
+        {
+            int n = 0;
+            int k = 1;
+
+            for (; n < playerCount; k++)
+            {
+                n = 1 + GetSum(k);
+            }
+
+            return 4 * k - 5;
+        }
+
+        private int GetSum(int k)
+        {
+            var sum = 0;
+            for (var i = 1; i <= k; i++)
+            {
+                sum += 6 * (i - 1);
+            }
+            return sum;
         }
 
         private Coordinates GetNextCoordinates()

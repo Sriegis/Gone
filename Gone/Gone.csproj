@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Gone</RootNamespace>
     <AssemblyName>Gone</AssemblyName>
-    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -51,6 +51,7 @@
     <Compile Include="CellGenerator.cs" />
     <Compile Include="CellOwner.cs" />
     <Compile Include="Coordinates.cs" />
+    <Compile Include="Extensions\Extensions.cs" />
     <Compile Include="Grid.cs" />
     <Compile Include="ICell.cs" />
     <Compile Include="IGrid.cs" />

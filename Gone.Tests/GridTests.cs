@@ -23,7 +23,7 @@ namespace Gone.Tests
 
             grid.InitializeWith(players);
 
-            var positions = new List<Coordinates>()
+            var positions = new List<Coordinates>
             {
                 new Coordinates(0, 0, 0),
                 new Coordinates(-4, 0, 4),
@@ -39,7 +39,7 @@ namespace Gone.Tests
 
             Assert.True(actualPositions.SequenceEqual(actualPositions));
             Assert.True(actualPositions.All(a => positions.Any(p => p.Equals(a))));
-            Assert.Equal(positions.Count(), actualPositions.Count());
+            Assert.Equal(positions.Count, actualPositions.Count());
         }
 
         [Theory]

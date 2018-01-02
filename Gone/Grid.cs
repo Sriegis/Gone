@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Gone.Extensions;
 
 namespace Gone
 {
@@ -42,13 +43,11 @@ namespace Gone
         {
             var coordinates = new List<Coordinates>();
 
-            var maxShells = GetMaximumsNumberOfShells();
+            var maxPlayerShell = GetMaximumsNumberOfShells();
 
-            int shell;
-
-            for (var n = 0; 4 * n + 1 <= maxShells; n++)
+            for (var n = 0; 4 * n + 1 <= maxPlayerShell; n++)
             {
-                shell = 4 * n + 1;
+                var shell = 4 * n + 1;
 
                 var coordinateMover = new PlayerCoordinateNavigator
                 {
@@ -90,11 +89,7 @@ namespace Gone
             if (timesToMove == 0)
                 return new List<Coordinates> { Coordinates.Origin };
 
-            var range = Enumerable.Range(1, timesToMove);
-
-            var directions = new List<Coordinates>();
-
-            directions.AddRange(range.SelectMany(i => GetDirections()));
+            var directions = GetDirections().Nplicate(timesToMove - 1);
 
             return directions;
         }
