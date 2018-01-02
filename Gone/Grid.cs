@@ -19,23 +19,31 @@ namespace Gone
 
         public void ProcessTransactions(List<Transaction> transactions)
         {
+            foreach (var transaction in transactions)
+            {
+                Process(transaction);
+            }
+        }
 
+        private void Process(Transaction transaction)
+        {
+            
         }
 
         private void AssignStartingPlayerCells(IEnumerable<Player> players)
         {
-            var coordinates = GetPlayerCoordinates();
-
-            var playerCells = Cells
-                .Where(c => coordinates.Any(cd => cd.Equals(c.Coordinates)))
+            var coordinates = GetPlayerCoordinates()
                 .Take(players.Count())
-                .OrderBy(c => Guid.NewGuid());
+                .ToList();
 
-            var playerNames = new Queue<string>(players.Select(p => p.Name));
+            var playerNames = players.Select(p => p.Name).OrderBy(_ => Guid.NewGuid());
 
-            foreach (var cell in playerCells)
+            var playerNameQueue = new Queue<string>(playerNames);
+
+            foreach (var coordinate in coordinates)
             {
-                cell.CellOwner = playerNames.Dequeue();
+                var cell = Cells.First(c => c.Coordinates.Equals(coordinate));
+                cell.CellOwner = playerNameQueue.Dequeue();
             }
         }
 
@@ -96,12 +104,12 @@ namespace Gone
 
         private IEnumerable<Coordinates> GetDirections()
         {
-            yield return Coordinates.UnitYZ;
-            yield return -Coordinates.UnitZX;
-            yield return Coordinates.UnitXY;
-            yield return -Coordinates.UnitYZ;
-            yield return Coordinates.UnitZX;
-            yield return -Coordinates.UnitXY;
+            yield return Coordinates.FourUnitsYZ;
+            yield return -Coordinates.FourUnitsZX;
+            yield return Coordinates.FourUnitsXY;
+            yield return -Coordinates.FourUnitsYZ;
+            yield return Coordinates.FourUnitsZX;
+            yield return -Coordinates.FourUnitsXY;
         }
 
         private int GetMaximumsNumberOfShells()

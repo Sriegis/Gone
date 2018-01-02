@@ -5,9 +5,9 @@ namespace Gone
     public class Coordinates
     {
         public static Coordinates Origin => new Coordinates(0, 0, 0);
-        public static Coordinates UnitYZ => new Coordinates(0, 4, -4);
-        public static Coordinates UnitXY => new Coordinates(4, -4, 0);
-        public static Coordinates UnitZX => new Coordinates(-4, 0, 4);
+        public static Coordinates FourUnitsYZ => new Coordinates(0, 4, -4);
+        public static Coordinates FourUnitsZX => new Coordinates(-4, 0, 4);
+        public static Coordinates FourUnitsXY => new Coordinates(4, -4, 0);
 
         public int X { get; }
         public int Y { get; }
@@ -22,9 +22,9 @@ namespace Gone
 
         public override bool Equals(object obj)
         {
-            var other = obj as Coordinates;
-            if (other == null)
+            if (!(obj is Coordinates other))
                 return false;
+
             return X.Equals(other.X) && Y.Equals(other.Y) && Z.Equals(other.Z);
         }
 

@@ -42,6 +42,36 @@ namespace Gone.Tests
             Assert.Equal(positions.Count, actualPositions.Count());
         }
 
+        [Fact]
+        public void Grid_Should_SetUpInitialPlayerPositionsForUnfilledPlayers()
+        {
+            var strats = 4;
+
+            var players = Enumerable.Range(1, strats).Select(i => new Player
+            {
+                Name = $"Name{i}",
+                Strategy = new StrategyStub()
+            });
+
+            var grid = new Grid();
+
+            grid.InitializeWith(players);
+
+            var positions = new List<Coordinates>
+            {
+                new Coordinates(0, 0, 0),
+                new Coordinates(-4, 0, 4),
+                new Coordinates(-4, 4, 0),
+                new Coordinates(0, 4, -4)
+            };
+
+            var actualPositions = grid.Cells.Where(c => c.CellOwner != "None").Select(c => c.Coordinates);
+
+            Assert.True(actualPositions.SequenceEqual(actualPositions));
+            Assert.True(actualPositions.All(a => positions.Any(p => p.Equals(a))));
+            Assert.Equal(positions.Count, actualPositions.Count());
+        }
+
         [Theory]
         [InlineData(17)]
         [InlineData(52)]

@@ -55,6 +55,7 @@
     <Compile Include="Grid.cs" />
     <Compile Include="ICell.cs" />
     <Compile Include="IGrid.cs" />
+    <Compile Include="IPlayer.cs" />
     <Compile Include="IStrategy.cs" />
     <Compile Include="ITransaction.cs" />
     <Compile Include="MyCell.cs" />

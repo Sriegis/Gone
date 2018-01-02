@@ -7,8 +7,8 @@ namespace Gone
     public class CellGenerator
     {
         private readonly Queue<Coordinates> _coordinateCache = new Queue<Coordinates>();
-        private int _currentShell = 0;
-        private int _playerCount;
+        private int _currentShell;
+        private readonly int _playerCount;
 
         public CellGenerator(int playerCount)
         {

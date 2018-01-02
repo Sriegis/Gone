@@ -75,6 +75,7 @@
   <ItemGroup>
     <Compile Include="CellGeneratorTests.cs" />
     <Compile Include="CoordinateTests.cs" />
+    <Compile Include="GameTests.cs" />
     <Compile Include="GridTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CellTests.cs" />
