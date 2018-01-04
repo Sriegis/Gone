@@ -11,48 +11,45 @@ namespace Gone.Tests
     public class GameTests
     {
         [Fact]
-        public void TransactionProcessing_Should_NotTakeMoreThanHalfASecond()
+        public void GameTurn_Should_NotTakeMoreThanHalfASec()
         {
-            var players = new Mock<IList<Player>>();
-
-            var strategies = new Mock<IStrategy>();
-            strategies.
-
-            players.Setup(l => l.Select(It.IsAny<Func<Player, bool>>())).Returns(strategies);
+            var strategy = new Mock<IStrategy>();
+            strategy.Setup(s => s.Turn(It.IsAny<MyCell[]>()))
+                .Callback(() => Task.Delay(600))
+                .Returns(new Transaction(Guid.NewGuid(), Guid.NewGuid(), 10));
 
             var players = Enumerable.Range(1, 5).Select(i => new Player
             {
                 Name = $"Name{i}",
-                Strategy = new StrategyStub()
+                Strategy = strategy.Object
             });
 
-            var game = new Game(players);
+            var gameTime = new TimeSpan(0, 0, 1);
 
-            game.Start();
+            var game = new Game(players, gameTime);
 
-
-        }
-    }
-
-    public interface IGame
-    {
-        IGame Start();
-    }
-
-    public class Game : IGame
-    {
-        private readonly IEnumerable<Player> _players;
-        private readonly IGrid _grid = new Grid();
-
-        public Game(IEnumerable<Player> players)
-        {
-            _players = players;
-            _grid.InitializeWith(_players);
+            Assert.Throws<TimeoutException>(() => game.Start());
         }
 
-        public IGame Start()
-        {
-            throw new NotImplementedException();
-        }
+        //[Fact]
+        //public void Game_Should_NotRunMoreThanSuppliedTime()
+        //{
+        //    var strategy = new Mock<IStrategy>();
+        //    strategy.Setup(s => s.Turn(It.IsAny<MyCell[]>()))
+        //        .Callback(() => Task.Delay(600))
+        //        .Returns(new Transaction(Guid.NewGuid(), Guid.NewGuid(), 10));
+
+        //    var players = Enumerable.Range(1, 5).Select(i => new Player
+        //    {
+        //        Name = $"Name{i}",
+        //        Strategy = strategy.Object
+        //    });
+
+        //    var gameTime = new TimeSpan(0, 0, 1);
+
+        //    var game = new Game(players, gameTime);
+
+        //    game.Start();
+        //}
     }
 }
