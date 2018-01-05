@@ -15,6 +15,7 @@ namespace Gone.Tests
 
             var players = Enumerable.Range(1, strats).Select(i => new Player
             {
+                Id = Guid.NewGuid(),
                 Name = $"Name{i}",
                 Strategy = new StrategyStub()
             });
@@ -35,7 +36,7 @@ namespace Gone.Tests
                 new Coordinates(-8, 0, 8)
             };
 
-            var actualPositions = grid.Cells.Where(c => c.CellOwner != "None").Select(c => c.Coordinates);
+            var actualPositions = grid.Cells.Where(c => c.CellOwner != null).Select(c => c.Coordinates);
 
             Assert.True(actualPositions.SequenceEqual(actualPositions));
             Assert.True(actualPositions.All(a => positions.Any(p => p.Equals(a))));
@@ -49,6 +50,7 @@ namespace Gone.Tests
 
             var players = Enumerable.Range(1, strats).Select(i => new Player
             {
+                Id = Guid.NewGuid(),
                 Name = $"Name{i}",
                 Strategy = new StrategyStub()
             });
@@ -65,7 +67,7 @@ namespace Gone.Tests
                 new Coordinates(0, 4, -4)
             };
 
-            var actualPositions = grid.Cells.Where(c => c.CellOwner != "None").Select(c => c.Coordinates);
+            var actualPositions = grid.Cells.Where(c => c.CellOwner != null).Select(c => c.Coordinates);
 
             Assert.True(actualPositions.SequenceEqual(actualPositions));
             Assert.True(actualPositions.All(a => positions.Any(p => p.Equals(a))));
@@ -79,6 +81,7 @@ namespace Gone.Tests
         {
             var players = Enumerable.Range(1, stratCount).Select(i => new Player
             {
+                Id = Guid.NewGuid(),
                 Name = $"Name{i}",
                 Strategy = new StrategyStub()
             });
@@ -87,22 +90,39 @@ namespace Gone.Tests
 
             grid.InitializeWith(players);
 
-            var actualPositions = grid.Cells.Where(c => c.CellOwner != "None");
+            var actualPositions = grid.Cells.Where(c => c.CellOwner != null);
 
             Assert.Equal(stratCount, actualPositions.Count());
         }
 
-        //[Fact]
-        //public void Grid_Should_ProcessAllGivenTransactions()
-        //{
-        //    var grid = new Mock<IGrid>();
+        [Fact]
+        public void GridGetPlayerCells_Should_ReturnTheCellsOfThePlayer()
+        {
+            var players = Enumerable.Range(1, 15).Select(i => new Player
+            {
+                Id = Guid.NewGuid(),
+                Name = $"Name{i}",
+                Strategy = new StrategyStub()
+            });
 
-        //    var trans = new List<Transaction>();
-        //    trans.Add(new Transaction());
-        //    trans.Add(new Transaction());
-        //    trans.Add(new Transaction());
+            var thatParticularPlayer = new Player
+            {
+                Id = Guid.Parse("00000000-1111-2222-3333-444444444444"),
+                Name = "Linas",
+                Strategy = new StrategyStub()
+            };
 
-        //    grid.Setup(g => g.ProcessTransactions(trans));
-        //}
+            var grid = new Grid();
+
+            grid.InitializeWith(players);
+
+            var actualCells = grid.Cells.Take(3).ToList();
+
+            actualCells.ForEach(c => c.CellOwner = thatParticularPlayer);
+
+            var expectedCells = grid.GetPlayerCells(thatParticularPlayer);
+
+            Assert.Equal(expectedCells, actualCells);
+        }
     }
 }

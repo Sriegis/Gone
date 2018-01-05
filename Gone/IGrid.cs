@@ -9,5 +9,7 @@ namespace Gone
         Grid InitializeWith(IEnumerable<Player> players);
 
         void ProcessTransactions(List<Transaction> transactions);
+
+        MyCell[] GetPlayerCells(Player player);
     }
 }

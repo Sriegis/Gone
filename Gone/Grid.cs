@@ -30,20 +30,25 @@ namespace Gone
             
         }
 
+        public MyCell[] GetPlayerCells(Player player)
+        {
+            return Cells.Where(c => c.CellOwner == player).Select(c => c as MyCell).ToArray();
+        }
+
         private void AssignStartingPlayerCells(IEnumerable<Player> players)
         {
             var coordinates = GetPlayerCoordinates()
                 .Take(players.Count())
                 .ToList();
 
-            var playerNames = players.Select(p => p.Name).OrderBy(_ => Guid.NewGuid());
+            players = players.OrderBy(p => p.Id);
 
-            var playerNameQueue = new Queue<string>(playerNames);
+            var playerQueue = new Queue<Player>(players);
 
             foreach (var coordinate in coordinates)
             {
                 var cell = Cells.First(c => c.Coordinates.Equals(coordinate));
-                cell.CellOwner = playerNameQueue.Dequeue();
+                cell.CellOwner = playerQueue.Dequeue();
             }
         }
 

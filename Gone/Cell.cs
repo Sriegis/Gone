@@ -10,7 +10,7 @@ namespace Gone
 
         public Coordinates Coordinates { get; set; }
 
-        public string CellOwner { get; set; }
+        public Player CellOwner { get; set; }
 
         public override bool Equals(object obj)
         {

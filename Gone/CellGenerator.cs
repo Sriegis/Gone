@@ -28,7 +28,7 @@ namespace Gone
                     Id = Guid.NewGuid(),
                     Coordinates = GetNextCoordinates(),
                     Resources = 0,
-                    CellOwner = "None"
+                    CellOwner = null
                 };
             }
 
